@@ -1,6 +1,6 @@
-const { load, save } = require('../../lib/db');
-const { requireAdmin } = require('../../lib/auth');
-const { readBody, needMethod } = require('../../lib/http');
+const { load, save } = require('../lib/db');
+const { requireAdmin } = require('../lib/auth');
+const { readBody } = require('../lib/http');
 
 const publicItem = i => ({
   id: i.id, name: i.name, description: i.description, priceCents: i.priceCents,
@@ -10,7 +10,8 @@ const publicItem = i => ({
 module.exports = async (req, res) => {
   try {
     const db = load();
-    const item = db.items.find(i => i.id === req.query.id);
+    const id = String((req.query && req.query.id) || '');
+    const item = db.items.find(i => i.id === id);
     if (!item) return res.status(404).json({ error: 'Item not found' });
 
     if (req.method === 'GET') return res.status(200).json({ item: publicItem(item) });

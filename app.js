@@ -219,7 +219,7 @@ async function viewItem(id) {
   const view = $('#view');
   view.innerHTML = `<div class="loading">Loading item…</div>`;
   let data;
-  try { data = await api('/api/items/' + encodeURIComponent(id)); }
+  try { data = await api('/api/item?id=' + encodeURIComponent(id)); }
   catch (e) { view.innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   const it = data.item;
 
@@ -491,7 +491,7 @@ async function viewAdmin() {
 
   $$('[data-del]').forEach(b => b.onclick = async () => {
     if (!confirm('Delete this item and its messages?')) return;
-    try { await api('/api/items/' + b.dataset.del, { method: 'DELETE' }); toast('Item deleted'); viewAdmin(); }
+    try { await api('/api/item?id=' + b.dataset.del, { method: 'DELETE' }); toast('Item deleted'); viewAdmin(); }
     catch (e) { toast(e.message, 'err'); }
   });
 }

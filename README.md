@@ -62,9 +62,18 @@ persistent data use one of:
 ```
 index.html  style.css  app.js  logo.png   ← frontend (logo.png = site logo)
 server.js                                  ← local dev server
-api/                                       ← Vercel serverless API
+api/                                       ← Vercel serverless API (FLAT — no subfolders!)
+  health.js                                ← test endpoint: /api/health
   register.js login.js logout.js me.js
-  items.js  items/[id].js                  ← listings CRUD (admin writes)
+  items.js                                 ← GET list, POST create (admin)
+  item.js                                  ← GET/PUT/DELETE one item via ?id=
   messages.js                              ← inbox / send / mark-read
-  lib/ db.js auth.js http.js               ← JSON DB + scrypt/HMAC auth
+lib/ db.js auth.js http.js                 ← shared code (NOT inside api/ on purpose)
 ```
+
+## ⚠️ Upgrading from an older upload?
+Delete these from your repo BEFORE uploading the new zip, or old/broken files linger:
+- the whole `api/items/` **folder** (old `[id].js` route — replaced by flat `api/item.js`)
+- any `api/lib/` folder (shared code now lives in root `lib/`)
+- any nested `api/items/items.js`
+Then commit, and Vercel will redeploy automatically.

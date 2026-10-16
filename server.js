@@ -29,12 +29,12 @@ async function routeApi(req, res, u) {
     '/api/logout': './api/logout',
     '/api/me': './api/me',
     '/api/items': './api/items',
+    '/api/item': './api/item',
+    '/api/health': './api/health',
     '/api/messages': './api/messages',
   };
   try {
     if (map[p]) return await require(map[p])(req, res);
-    const m = p.match(/^\/api\/items\/([^/]+)$/);
-    if (m) { req.query = { id: m[1] }; return await require('./api/items/[id]')(req, res); }
     res.status(404).json({ error: 'API route not found' });
   } catch (e) { res.status(500).json({ error: e.message }); }
 }
