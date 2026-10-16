@@ -19,10 +19,29 @@ login, admin item listings with thumbnail uploads, and a built-in message system
 node server.js        # → http://localhost:3000
 ```
 
-## Deploy on Vercel
-1. Push this folder to GitHub/GitLab and **Import** it in Vercel (framework: *Other*).
-   Vercel auto-detects the `api/` serverless functions — no config needed.
-2. Or run: `npx vercel`
+## Deploy on Vercel — checklist
+1. The files must sit at the **repository root** — Vercel must see `index.html`,
+   `api/`, `lib/` etc. directly when it opens the repo (no nested folder like
+   `krylo-market/index.html`). If they are nested, set **Root Directory** in
+   Vercel → Project → Settings → General.
+2. In Vercel choose **"Import Git Repository"**, framework preset: **Other**,
+   build command: *(empty)*, output directory: *(empty)*. Vercel auto-detects
+   every `.js` file inside `api/` as a serverless function — no build needed.
+3. Deploy, then open the generated `*.vercel.app` URL (use the URL shown on the
+   "Congratulations" screen — the project dashboard page can 404 right after
+   deploy while DNS propagates).
+4. API endpoints to verify after deploy:
+   - `https://YOUR-APP.vercel.app/api/items` → should return JSON with items
+   - `https://YOUR-APP.vercel.app/` → Krylo Market homepage
+
+### Troubleshooting 404 / 500 on Vercel
+- **404 on every page** → files are not at the repo root, or you opened the
+  project dashboard URL instead of the deployment URL. Fix Root Directory.
+- **404/500 on /api/... only** → check Vercel → Deployments → [latest] → Logs.
+  Shared code lives in `/lib` (NOT inside `api/`) on purpose — anything inside
+  `api/` becomes an endpoint.
+- **Data disappears after redeploy** → expected on serverless `/tmp`; use
+  `KRYLO_DATA_DIR` or swap `lib/db.js` for a real database (see note below).
 
 ### Default admin account
 | Email | Password |

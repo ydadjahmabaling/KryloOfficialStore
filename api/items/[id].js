@@ -1,6 +1,6 @@
-const { load, save } = require('../lib/db');
-const { requireAdmin } = require('../lib/auth');
-const { readBody, needMethod } = require('../lib/http');
+const { load, save } = require('../../lib/db');
+const { requireAdmin } = require('../../lib/auth');
+const { readBody, needMethod } = require('../../lib/http');
 
 const publicItem = i => ({
   id: i.id, name: i.name, description: i.description, priceCents: i.priceCents,

@@ -1,6 +1,6 @@
-const { load, save, genId } = require('./lib/db');
-const { requireUser } = require('./lib/auth');
-const { readBody, needMethod } = require('./lib/http');
+const { load, save, genId } = require('../lib/db');
+const { requireUser } = require('../lib/auth');
+const { readBody, needMethod } = require('../lib/http');
 
 module.exports = async (req, res) => {
   try {

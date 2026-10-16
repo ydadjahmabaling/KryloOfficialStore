@@ -1,6 +1,6 @@
-const { load, save, genId, hashPassword } = require('./lib/db');
-const { makeToken, setAuthCookie, publicUser } = require('./lib/auth');
-const { readBody, needMethod } = require('./lib/http');
+const { load, save, genId, hashPassword } = require('../lib/db');
+const { makeToken, setAuthCookie, publicUser } = require('../lib/auth');
+const { readBody, needMethod } = require('../lib/http');
 
 module.exports = async (req, res) => {
   try {
